@@ -1,0 +1,33 @@
+{
+   "name": "master-server",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "type": "commonjs",
+   "devDependencies": {
+      "@types/node": "^16.11.10",
+      "nodemon": "^3.1.4",
+      "ts-node": "10.9.1",
+      "tslint": "^6.1.3",
+      "tslint-config-prettier": "^1.18.0",
+      "typescript": "^5.5.4"
+   },
+   "dependencies": {
+      "@apollo/server": "^4.10.5",
+      "@graphql-tools/schema": "^10.0.4",
+      "dotenv": "^16.4.5",
+      "graphql": "^16.9.0",
+      "graphql-import-node": "^0.0.5",
+      "graphql-subscriptions": "^2.0.0",
+      "graphql-ws": "^5.16.0",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.13",
+      "typeorm": "0.3.20",
+      "ws": "^8.18.0"
+   },
+   "scripts": {
+      "db:start": "docker-compose --env-file .env.local up -d",
+      "start": "nodemon --exec NODE_ENV=local ts-node src/index.ts",
+      "typeorm": "typeorm-ts-node-commonjs"
+   },
+   "license": "MIT"
+}
