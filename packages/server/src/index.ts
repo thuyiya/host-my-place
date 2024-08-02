@@ -18,7 +18,7 @@ const typeDefs = mergeTypeDefs(typesArray);
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 
-async function startServer() {
+export const startServer = async () => {
     try {
         // Initialize the database connection
         await AppDataSource.initialize();
@@ -42,4 +42,4 @@ async function startServer() {
     }
 }
 
-startServer();
+startServer()
