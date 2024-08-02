@@ -1,15 +1,23 @@
+import * as bcrypt from 'bcryptjs';
 import { MutationRegisterArgs, QueryHelloArgs, Resolvers } from "./types";
+import { User } from './entity/User';
 
 export const resolvers: Resolvers = {
     Query: {
         hello: (_, { name }: QueryHelloArgs) => `Tata ${name || "world"}`
     },
     Mutation: {
-        register: async (_, { email, password }: MutationRegisterArgs): Promise<string> => {
-            // Implement your registration logic here.
-            // For now, let's return true as a placeholder.
-            // Replace with actual registration logic and return appropriate boolean value.
-            return email + password;
+        register: async (_, { email, password }: MutationRegisterArgs): Promise<boolean> => {
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const user = User.create({
+                email,
+                password: hashedPassword
+            })
+
+            await user.save();
+
+            return true;
         }
     }
 };

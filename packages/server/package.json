@@ -7,6 +7,7 @@
       "@graphql-codegen/cli": "^5.0.2",
       "@graphql-codegen/typescript": "^4.0.9",
       "@graphql-codegen/typescript-resolvers": "^4.2.1",
+      "@types/bcryptjs": "^2.4.6",
       "@types/node": "^16.11.10",
       "@types/uuid": "^10.0.0",
       "nodemon": "^3.1.4",
@@ -19,6 +20,7 @@
       "@apollo/server": "^4.10.5",
       "@graphql-tools/load-files": "^7.0.0",
       "@graphql-tools/schema": "^10.0.4",
+      "bcryptjs": "^2.4.3",
       "dotenv": "^16.4.5",
       "graphql": "^16.9.0",
       "graphql-subscriptions": "^2.0.0",
@@ -31,6 +33,7 @@
    },
    "scripts": {
       "db:start": "docker-compose --env-file .env.local up -d",
+      "db:connect": "docker exec -it f340abec9a48 psql -U thusitha_password -d master-server-database",
       "start": "nodemon --exec NODE_ENV=local ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
       "generate": "graphql-codegen"
