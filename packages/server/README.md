@@ -17,3 +17,7 @@ Steps to run this project:
 
 ## For Typescript compile issue
 - Please make sure you are using same version in vs code as in your project
+
+## Connect to Postgres in Docker using your machine terminal
+1. First find your container name `docker ps`
+2. `docker exec -it <container_id_or_name> psql -U ${DB_USERNAME} -d ${DB_NAME}`

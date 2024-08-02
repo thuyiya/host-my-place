@@ -5,3 +5,7 @@ build/
 tmp/
 temp/
 types/index.d.ts
+
+.DS_Store
+./.DS_Store
+DS_Store
