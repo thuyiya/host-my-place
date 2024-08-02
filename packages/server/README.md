@@ -33,3 +33,7 @@ first of all clone the project and `yarn` for install `node_modules`
 3. Then for check postgres database working with Docker container use this command  `yarn db:connect` and check the script with your name and password for your database align with  `.env.local`
 4. Then generate the types for your project using `yarn generate` 
 5. Then run the project `yarn start`
+
+## Testing
+1. We use TS-JEST `https://kulshekhar.github.io/ts-jest/docs/getting-started`
+2. For run test `yarn test`
