@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "removeComments": true,
     "noImplicitAny": true,
     "strictNullChecks": true,

@@ -1,7 +1,13 @@
 import * as path from 'path';
 
 import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import express from 'express'; 
+import http from 'http';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 import { resolvers } from './resolvers';
@@ -12,25 +18,41 @@ const typesArray = loadFilesSync(path.join(__dirname, './schema/**/*.graphql'));
 const typeDefs = mergeTypeDefs(typesArray);
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
+interface AppContext {
+    token?: string;
+}
 
 export const startServer = async () => {
     try {
+
+        const app: express.Express = express()
+        const httpServer = http.createServer(app);
+
         // Initialize the database connection
         await AppDataSource.initialize();
         console.log("Database connected successfully!");
 
-        // Create an instance of ApolloServer
-        const server = new ApolloServer({
+        // Set up Apollo Server
+        const server = new ApolloServer<AppContext>({
             typeDefs,
             resolvers,
+            plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
         });
+        await server.start();
 
-        // Start the server
-        const { url } = await startStandaloneServer(server, {
-            listen: { port: PORT },
-            // context: context, // Uncomment and modify if you have a context function
+        app.use(
+            cors(),
+            bodyParser.json(),
+            // expressMiddleware accepts the same arguments:
+            // an Apollo Server instance and optional configuration options
+            expressMiddleware(server, {
+                context: async ({ req }) => ({ token: req.headers.token }),
+            }),
+        );
+
+        return await new Promise<string>((resolve) => {
+            httpServer.listen({ port: PORT }, () => resolve("http://localhost:" + PORT));
         });
-        return { server, url }
     } catch (error) {
         throw error
     }

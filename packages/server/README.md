@@ -41,3 +41,5 @@ first of all clone the project and `yarn` for install `node_modules`
 3. Start database with docker `yarn db:start` and setup your test database as well `yarn test:database` if already exists no problem
 4. Then run the app in different terminal as test server using `yarn test:server` 
 5. For run test `yarn test`
+
+in testing we use @apollo/client core for make request
