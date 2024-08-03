@@ -4,10 +4,11 @@ dotenv.config();
 
 import { QueryRunner } from 'typeorm';
 import { AppDataSource } from './src/data-source';
-
+import { startServer } from "./src/server";
 
 beforeAll(async () => {
-    await AppDataSource.initialize();
+    const url = await startServer()
+    console.log(`🚀 Server ready at: ${url}`);
 });
 
 afterAll(async () => {
