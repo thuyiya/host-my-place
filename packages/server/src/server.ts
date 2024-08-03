@@ -1,9 +1,4 @@
-import * as dotenv from 'dotenv';
-import "reflect-metadata";
 import * as path from 'path';
-
-// Load environment variables from .env file
-dotenv.config();
 
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
@@ -35,11 +30,9 @@ export const startServer = async () => {
             listen: { port: PORT },
             // context: context, // Uncomment and modify if you have a context function
         });
-
-        console.log(`🚀 Server ready at: ${url}`);
+        return { server, url }
     } catch (error) {
-        console.error("Error starting the server:", error);
+        throw error
     }
 }
 
-startServer()

@@ -11,38 +11,42 @@ type EnvironmentVariable = {
     DB_NAME: string;
     PORT: number;
     SERVER_URL: string;
+    NODE_ENV: string;
 }
 
 const config: Record<Environment, EnvironmentVariable> = {
     LOCAL: {
-        APP_NAME: 'abb',
+        APP_NAME: 'abb_local',
         DB_HOST: "localhost",
         DB_PORT: 5434,
         DB_USERNAME: "user_thusitha",
         DB_PASSWORD: "password_thusitha",
         DB_NAME: "master-server-database",
         PORT: 4531,
-        SERVER_URL: "http://localhost:4531"
+        SERVER_URL: "http://localhost:4531",
+        NODE_ENV: process.env.NODE_ENV || 'LOCAL'
     },
     PRODUCTION: {
-        APP_NAME: 'abb',
-        DB_HOST: "prod-db-host",
-        DB_PORT: 5432,
-        DB_USERNAME: "prod_user",
-        DB_PASSWORD: "prod_password",
+        APP_NAME: 'abb_prod',
+        DB_HOST: "localhost",
+        DB_PORT: 5434,
+        DB_USERNAME: "user_thusitha",
+        DB_PASSWORD: "password_thusitha",
         DB_NAME: "prod_database",
-        PORT: 80,
-        SERVER_URL: "http://prod-server-url"
+        PORT: 4531,
+        SERVER_URL: "http://prod-server-url",
+        NODE_ENV: process.env.NODE_ENV || 'PRODUCTION'
     },
     TEST: {
-        APP_NAME: 'abb',
-        DB_HOST: "test-db-host",
-        DB_PORT: 5435,
-        DB_USERNAME: "test_user",
-        DB_PASSWORD: "test_password",
+        APP_NAME: 'abb_test',
+        DB_HOST: "localhost",
+        DB_PORT: 5434,
+        DB_USERNAME: "user_thusitha",
+        DB_PASSWORD: "password_thusitha",
         DB_NAME: "test_database",
-        PORT: 4532,
-        SERVER_URL: "http://test-server-url"
+        PORT: 4531,
+        SERVER_URL: "http://test-server-url",
+        NODE_ENV: process.env.NODE_ENV || 'TEST'
     }
 };
 
@@ -59,6 +63,7 @@ DB_PASSWORD=${currentConfig.DB_PASSWORD}
 DB_NAME=${currentConfig.DB_NAME}
 PORT=${currentConfig.PORT}
 SERVER_URL=${currentConfig.SERVER_URL}
+NODE_ENV=${currentConfig.NODE_ENV}
 `;
 
 // Write .env file

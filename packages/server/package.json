@@ -3,6 +3,7 @@
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
    "type": "commonjs",
+   "main": "index.ts",
    "devDependencies": {
       "@graphql-codegen/cli": "^5.0.2",
       "@graphql-codegen/typescript": "^4.0.9",
@@ -36,13 +37,16 @@
       "ws": "^8.18.0"
    },
    "scripts": {
-      "setup:env": "NODE_ENV=LOCAL ts-node config/index.ts",
-      "db:start": "yarn run setup:env && docker compose --env-file .env up -d",
-      "db:connect": "docker exec -it 85ca896b6dfb psql -U thusitha_password -d master-server-database",
-      "start": "nodemon --exec ts-node src/index.ts",
+      "setup:local": "NODE_ENV=LOCAL ts-node config/index.ts",
+      "setup:test": "NODE_ENV=TEST ts-node config/index.ts",
+      "db:start": "docker compose --env-file .env up -d",
+      "db:connect": "docker exec -it backenddatabase psql -U user_thusitha -d master-server-database",
+      "start": "nodemon --exec ts-node index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
       "generate": "graphql-codegen",
-      "test": "NODE_ENV=LOCAL jest"
+      "test:server": "yarn setup:test && yarn start",
+      "test": "jest --detectOpenHandles",
+      "test:database": "docker exec -it backenddatabase psql -U user_thusitha -d postgres -c \"CREATE DATABASE test_database;\""
    },
    "license": "MIT"
 }
