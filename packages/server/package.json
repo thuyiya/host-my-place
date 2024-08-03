@@ -36,12 +36,13 @@
       "ws": "^8.18.0"
    },
    "scripts": {
-      "db:start": "docker-compose --env-file .env.local up -d",
-      "db:connect": "docker exec -it f340abec9a48 psql -U thusitha_password -d master-server-database",
-      "start": "nodemon --exec NODE_ENV=local ts-node src/index.ts",
+      "setup:env": "NODE_ENV=LOCAL ts-node config/index.ts",
+      "db:start": "yarn run setup:env && docker compose --env-file .env up -d",
+      "db:connect": "docker exec -it 85ca896b6dfb psql -U thusitha_password -d master-server-database",
+      "start": "nodemon --exec ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
       "generate": "graphql-codegen",
-      "test": "NODE_ENV=local jest"
+      "test": "NODE_ENV=LOCAL jest"
    },
    "license": "MIT"
 }

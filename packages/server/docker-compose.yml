@@ -1,4 +1,4 @@
-version: '3.8'
+name: abb_app_service
 services:
   postgres:
     image: postgres:latest

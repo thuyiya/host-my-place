@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
-import * as path from 'path';
 
-dotenv.config({ path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`) });
+dotenv.config();
 
 import { request } from 'graphql-request';
 import { AppDataSource } from '../data-source';

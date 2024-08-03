@@ -3,7 +3,7 @@ import "reflect-metadata";
 import * as path from 'path';
 
 // Load environment variables from .env file
-dotenv.config({ path: path.join(__dirname, `../.env.${process.env.NODE_ENV}`) });
+dotenv.config();
 
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
