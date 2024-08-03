@@ -1,5 +1,4 @@
-import * as path from 'path';
-
+import path from 'path';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
@@ -9,13 +8,24 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import { loadFilesSync } from '@graphql-tools/load-files';
-import { mergeTypeDefs } from '@graphql-tools/merge';
-import { resolvers } from './resolvers';
+import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+
 import { AppDataSource } from './data-source'; // Import your DataSource
 
-// Load all .graphql files from the schema directories
-const typesArray = loadFilesSync(path.join(__dirname, './schema/**/*.graphql'));
-const typeDefs = mergeTypeDefs(typesArray);
+//** Schema Merging */
+// Load all schema.graphql files from modules
+const typeDefsArray = loadFilesSync(path.join(__dirname, './modules'), { extensions: ['graphql'] })
+const typeDefs = mergeTypeDefs(typeDefsArray);
+
+// Load all resolvers.ts files from modules
+const resolversArray = loadFilesSync(path.join(__dirname, './modules'), { extensions: ['ts'] })
+const resolvers = mergeResolvers(resolversArray);
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+/** Build Schema and arrange them with Schema Merging */
+/** Can Use Stitching also if you plan to work with different schema set as sub schema, Federated Schema as multiple services */
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 interface AppContext {
@@ -34,8 +44,7 @@ export const startServer = async () => {
 
         // Set up Apollo Server
         const server = new ApolloServer<AppContext>({
-            typeDefs,
-            resolvers,
+            schema,
             plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
         });
         await server.start();

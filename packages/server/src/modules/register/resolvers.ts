@@ -1,19 +1,16 @@
 import * as bcrypt from 'bcryptjs';
-import { MutationRegisterArgs, QueryHelloArgs, Resolvers } from "./types";
-import { User } from './entity/User';
+import { Resolvers } from "../../types";
+import { User } from '../../entity/User';
 
 export const resolvers: Resolvers = {
-    Query: {
-        hello: (_, { name }: QueryHelloArgs) => `Tata ${name || "world"}`
-    },
     Mutation: {
-        register: async (_, { email, password }: MutationRegisterArgs): Promise<boolean> => {
+        register: async (_, { email, password }: { email: string; password: string }) => {
             const hashedPassword = await bcrypt.hash(password, 10);
 
             const user = User.create({
                 email,
                 password: hashedPassword
-            })
+            });
 
             await user.save();
 

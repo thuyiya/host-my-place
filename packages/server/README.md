@@ -43,3 +43,7 @@ first of all clone the project and `yarn` for install `node_modules`
 5. For run test `yarn test`
 
 in testing we use @apollo/client core for make request
+** New configuration you can now run test with just up database, create a database and run test script 
+
+## Lets find packages
+- npx depcheck 
