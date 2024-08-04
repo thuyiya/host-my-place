@@ -1,6 +1,6 @@
 import { ApolloClient, gql } from '@apollo/client/core';
 import { InMemoryCache } from '@apollo/client/cache';
-import { User } from '../entity/User';
+import { User } from '../../../entity/User';
 
 const email = "test3@test.com";
 const password = "Test1234";
