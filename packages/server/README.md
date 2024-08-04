@@ -35,6 +35,9 @@ first of all clone the project and `yarn` for install `node_modules`
 5. Then generate the types for your project using `yarn generate` 
 6. Then run the project `yarn start`
 
+## Working with Graphql Express Middleware
+- https://github.com/apollographql/apollo-server#readme
+
 ## Testing
 1. We use TS-JEST `https://kulshekhar.github.io/ts-jest/docs/getting-started`
 2. Build env for test setup sor run `yarn setup:test`
@@ -44,6 +47,20 @@ first of all clone the project and `yarn` for install `node_modules`
 
 in testing we use @apollo/client core for make request
 ** New configuration you can now run test with just up database, create a database and run test script 
+
+## Used with
+1. TypeORM
+2. GraphQL
+3. CodeGen
+4. Redis
+5. Postgres
+6. Jest
+7. Express
+8. bcryptjs
+9. yup
+10. uuid
+11. apollo server and client
+
 
 ## Lets find packages
 - npx depcheck 
