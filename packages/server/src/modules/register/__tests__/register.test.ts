@@ -61,5 +61,20 @@ test("Register User", async () => {
             }
         ]
     })
+
+    //lets see is it bad password
+    const { data: data4 } = await client.mutate({
+        mutation: REGISTER_MUTATION,
+        variables: { email: email, password: "12" },
+    });
+    expect(data4).toEqual({
+        register: [
+            {
+                "__typename": "Error",
+                path: 'password',
+                message: REGISTER_CONSTANT.PASSWORD_NOT_LONG_ENOUGH
+            }
+        ]
+    })
     
 });
