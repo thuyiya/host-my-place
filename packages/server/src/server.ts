@@ -19,7 +19,7 @@ const typeDefsArray = loadFilesSync(path.join(__dirname, './modules'), { extensi
 const typeDefs = mergeTypeDefs(typeDefsArray);
 
 // Load all resolvers.ts files from modules
-const resolversArray = loadFilesSync(path.join(__dirname, './modules'), { extensions: ['ts'] })
+const resolversArray = loadFilesSync(path.join(path.join(__dirname, 'modules'), '**', 'resolvers.ts'), { extensions: ['ts'] });
 const resolvers = mergeResolvers(resolversArray);
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });

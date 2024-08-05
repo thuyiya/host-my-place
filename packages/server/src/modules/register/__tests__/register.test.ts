@@ -1,11 +1,9 @@
-import { ApolloClient, gql } from '@apollo/client/core';
-import { InMemoryCache } from '@apollo/client/cache';
+import { gql } from '@apollo/client/core';
 import { User } from '../../../entity/User';
+import { REGISTER_CONSTANT } from '../constant';
 
 const email = "test3@test.com";
 const password = "Test1234";
-
-const url = "http://localhost:4531";
 
 const REGISTER_MUTATION = gql`
     mutation Register($email: String!, $password: String!) {
@@ -17,11 +15,9 @@ const REGISTER_MUTATION = gql`
 `;
 
 test("Register User", async () => {
-    const client = new ApolloClient({
-        uri: url,
-        cache: new InMemoryCache(),
-    });
-
+    
+    const client = globalThis.client;
+    //lets register new user
     const { data } = await client.mutate({
         mutation: REGISTER_MUTATION,
         variables: { email, password },
@@ -41,5 +37,29 @@ test("Register User", async () => {
     });
 
     expect(data2.register).toHaveLength(1)
-    expect(data2.register[0].path).toEqual('email')
+    expect(data2.register[0]).toMatchObject({
+        path: 'email',
+        message: REGISTER_CONSTANT.ALREADY_EXIST
+    })
+
+    //lets see is it bad email
+    const { data: data3 } = await client.mutate({
+        mutation: REGISTER_MUTATION,
+        variables: { email: "wr", password },
+    });
+    expect(data3).toEqual({
+        register : [
+            {
+                "__typename": "Error",
+                path: 'email',
+                message: REGISTER_CONSTANT.EMAIL_NOT_LONG_ENOUGH
+            },
+            {
+                "__typename": "Error",
+                path: 'email',
+                message: REGISTER_CONSTANT.EMAIL_IS_INVALID
+            }
+        ]
+    })
+    
 });
