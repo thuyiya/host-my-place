@@ -49,7 +49,7 @@
       "start": "nodemon --exec ts-node index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
       "generate": "graphql-codegen",
-      "test": "yarn setup:test && jest --detectOpenHandles",
+      "test": "yarn setup:test && jest --detectOpenHandles --forceExit",
       "test:database": "docker exec -it backenddatabase psql -U user_thusitha -d postgres -c \"CREATE DATABASE test_database;\""
    },
    "license": "MIT"

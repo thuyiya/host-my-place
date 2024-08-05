@@ -9,7 +9,10 @@ const url = "http://localhost:4531";
 
 const REGISTER_MUTATION = gql`
     mutation Register($email: String!, $password: String!) {
-        register(email: $email, password: $password)
+        register(email: $email, password: $password) {
+            path
+            message
+        }
     }
 `;
 
@@ -24,10 +27,19 @@ test("Register User", async () => {
         variables: { email, password },
     });
 
-    expect(data).toEqual({ register: true });
+    expect(data).toEqual({ register: null });
 
     const users = await User.find({ where: { email } });
     expect(users).toHaveLength(1);
     const user = users[0];
     expect(user.email).toEqual(email);
+
+    //lets see for existing users
+    const { data: data2 } = await client.mutate({
+        mutation: REGISTER_MUTATION,
+        variables: { email, password },
+    });
+
+    expect(data2.register).toHaveLength(1)
+    expect(data2.register[0].path).toEqual('email')
 });

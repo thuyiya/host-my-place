@@ -5,8 +5,23 @@ import { User } from '../../entity/User';
 export const resolvers: Resolvers = {
     Mutation: {
         register: async (_, { email, password }: { email: string; password: string }) => {
-            const hashedPassword = await bcrypt.hash(password, 10);
+            const userAlreadyExist = await User.findOne({
+                where: {
+                    email
+                },
+                select: ["id"]
+            })
 
+            if (userAlreadyExist) {
+                return [
+                    {
+                        path: "email",
+                        message: "Already Taken"
+                    }
+                ]
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
             const user = User.create({
                 email,
                 password: hashedPassword
@@ -14,7 +29,7 @@ export const resolvers: Resolvers = {
 
             await user.save();
 
-            return true;
+            return null;
         }
     }
 };
