@@ -4,5 +4,7 @@ module.exports = {
   transform: {
     "^.+.tsx?$": ["ts-jest",{}],
   },
-  setupFilesAfterEnv: ["./setupTests.ts"]
+  setupFilesAfterEnv: ["./tests/setupTests.ts"],
+  globalSetup: "./tests/globalSetup.ts",
+  globalTeardown: "./tests/globalTeardown.ts"
 };

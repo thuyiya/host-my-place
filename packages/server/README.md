@@ -48,5 +48,19 @@ first of all clone the project and `yarn` for install `node_modules`
 in testing we use @apollo/client core for make request
 ** New configuration you can now run test with just up database, create a database and run test script 
 
+## Used with
+1. TypeORM
+2. GraphQL
+3. CodeGen
+4. Redis
+5. Postgres
+6. Jest
+7. Express
+8. bcryptjs
+9. yup
+10. uuid
+11. apollo server and client
+
+
 ## Lets find packages
 - npx depcheck 

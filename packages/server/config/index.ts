@@ -12,6 +12,7 @@ type EnvironmentVariable = {
     PORT: number;
     SERVER_URL: string;
     NODE_ENV: string;
+    HOST: string;
 }
 
 const config: Record<Environment, EnvironmentVariable> = {
@@ -24,7 +25,8 @@ const config: Record<Environment, EnvironmentVariable> = {
         DB_NAME: "master-server-database",
         PORT: 4531,
         SERVER_URL: "http://localhost:4531",
-        NODE_ENV: process.env.NODE_ENV || 'LOCAL'
+        NODE_ENV: process.env.NODE_ENV || 'LOCAL',
+        HOST: 'localhost'
     },
     PRODUCTION: {
         APP_NAME: 'abb_prod',
@@ -35,7 +37,8 @@ const config: Record<Environment, EnvironmentVariable> = {
         DB_NAME: "prod_database",
         PORT: 4531,
         SERVER_URL: "http://prod-server-url",
-        NODE_ENV: process.env.NODE_ENV || 'PRODUCTION'
+        NODE_ENV: process.env.NODE_ENV || 'PRODUCTION',
+        HOST: 'localhost'
     },
     TEST: {
         APP_NAME: 'abb_test',
@@ -46,7 +49,8 @@ const config: Record<Environment, EnvironmentVariable> = {
         DB_NAME: "test_database",
         PORT: 4531,
         SERVER_URL: "http://test-server-url",
-        NODE_ENV: process.env.NODE_ENV || 'TEST'
+        NODE_ENV: process.env.NODE_ENV || 'TEST',
+        HOST: 'localhost'
     }
 };
 
@@ -64,6 +68,7 @@ DB_NAME=${currentConfig.DB_NAME}
 PORT=${currentConfig.PORT}
 SERVER_URL=${currentConfig.SERVER_URL}
 NODE_ENV=${currentConfig.NODE_ENV}
+HOST=${currentConfig.HOST}
 `;
 
 // Write .env file

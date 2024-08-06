@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import * as yup from 'yup';
-import { MutationRegisterArgs, Resolvers } from "../../types";
+import { Resolvers } from "../../types";
 import { User } from '../../entity/User';
 import { formatYupErrors } from '../../utils/formatYupErrors';
 import { REGISTER_CONSTANT } from './constant';
@@ -13,7 +13,7 @@ const schema = yup.object().shape({
 
 export const resolvers: Resolvers = {
     Mutation: {
-        register: async (_, args: MutationRegisterArgs, { redis }) => {
+        register: async (_, args, { redis, url }) => {
             try {
                 await schema.validate(args, { abortEarly: false })
             } catch (error) {
@@ -46,7 +46,10 @@ export const resolvers: Resolvers = {
 
             await user.save();
 
-            await createConfirmedEmailLink("", user.id, redis)
+            const link = await createConfirmedEmailLink(url, user.id, redis)
+
+            console.log("Link ", link);
+            
 
             return null;
         }
