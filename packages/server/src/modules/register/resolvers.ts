@@ -4,6 +4,7 @@ import { MutationRegisterArgs, Resolvers } from "../../types";
 import { User } from '../../entity/User';
 import { formatYupErrors } from '../../utils/formatYupErrors';
 import { REGISTER_CONSTANT } from './constant';
+import { createConfirmedEmailLink } from '../../utils/createConfirmedEmailLink';
 
 const schema = yup.object().shape({
     email: yup.string().min(3, REGISTER_CONSTANT.EMAIL_NOT_LONG_ENOUGH).max(255).email(REGISTER_CONSTANT.EMAIL_IS_INVALID),
@@ -12,7 +13,7 @@ const schema = yup.object().shape({
 
 export const resolvers: Resolvers = {
     Mutation: {
-        register: async (_, args: MutationRegisterArgs) => {
+        register: async (_, args: MutationRegisterArgs, { redis }) => {
             try {
                 await schema.validate(args, { abortEarly: false })
             } catch (error) {
@@ -44,6 +45,8 @@ export const resolvers: Resolvers = {
             });
 
             await user.save();
+
+            await createConfirmedEmailLink("", user.id, redis)
 
             return null;
         }
